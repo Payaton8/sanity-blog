@@ -2,7 +2,7 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 
-// スキーマタイプ（後で拡張可能）
+// スキーマタイプ
 const schemaTypes = [
   {
     name: 'post',
@@ -176,14 +176,45 @@ const schemaTypes = [
 
 export default defineConfig({
   name: 'default',
-  title: 'HAYABLOG',
+  title: 'HAYABLOG Studio',
 
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
 
-  plugins: [structureTool(), visionTool()],
+  basePath: '/studio', // 重要: Studioのベースパス
+
+  plugins: [
+    structureTool({
+      title: 'Content',
+      name: 'content',
+      structure: (S) =>
+        S.list()
+          .title('Content')
+          .items([
+            S.listItem()
+              .title('Posts')
+              .child(S.documentTypeList('post').title('Posts')),
+            S.listItem()
+              .title('Authors')
+              .child(S.documentTypeList('author').title('Authors')),
+            S.listItem()
+              .title('Categories')
+              .child(S.documentTypeList('category').title('Categories')),
+          ]),
+    }),
+    visionTool({
+      title: 'GROQ',
+      name: 'vision',
+    }),
+  ],
 
   schema: {
     types: schemaTypes,
+  },
+
+  studio: {
+    components: {
+      navbar: () => null, // ナビゲーションバーを非表示
+    },
   },
 })
