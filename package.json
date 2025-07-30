@@ -11,12 +11,14 @@
   "dependencies": {
     "@sanity/client": "^7.8.1",
     "@sanity/image-url": "^1.1.0",
+    "@sanity/vision": "^4.2.0",
     "@tailwindcss/typography": "^0.5.16",
     "emailjs-com": "^3.2.0",
     "next": "15.4.4",
-    "next-sanity": "^10.0.4",
+    "next-sanity": "^10.0.6",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "sanity": "^4.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
