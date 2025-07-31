@@ -1,6 +1,7 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
+import { table } from '@sanity/table' // ← この行を追加
 
 // スキーマタイプ
 const schemaTypes = [
@@ -86,6 +87,10 @@ const schemaTypes = [
             type: 'image',
             options: { hotspot: true },
           },
+          {
+      type: 'table', // ← この行を追加
+      title: 'Table',
+    },
         ],
       },
       {
@@ -206,6 +211,7 @@ export default defineConfig({
       title: 'GROQ',
       name: 'vision',
     }),
+    table(),
   ],
 
   schema: {
