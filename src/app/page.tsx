@@ -4,6 +4,8 @@ export const metadata = homeMetadata;
 
 import Link from 'next/link';
 
+export const revalidate = 60;
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">

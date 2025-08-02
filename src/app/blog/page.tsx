@@ -5,6 +5,8 @@ export const metadata = blogMetadata;
 import { client } from '../../../lib/sanity';
 import Link from 'next/link';
 
+export const revalidate = 0;
+
 async function getPosts() {
   try {
     const query = `*[_type == "post" && defined(title)] | order(publishedAt desc) {
