@@ -26,12 +26,17 @@ const schemaTypes = [
         },
         validation: (rule: any) => rule.required(),
       },
-      {
-        name: 'publishedAt',
-        title: 'Published at',
-        type: 'datetime',
-        initialValue: () => new Date().toISOString(),
-      },
+     {
+  name: 'publishedAt',
+  title: 'Published at',
+  type: 'datetime',
+  initialValue: () => new Date().toISOString(),
+  validation: (rule: any) => rule.required(), // 必須に設定
+  options: {
+    dateFormat: 'YYYY-MM-DD',
+    timeFormat: 'HH:mm',
+  },
+},
       {
         name: 'excerpt',
         title: 'Excerpt',
