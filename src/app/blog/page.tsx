@@ -6,22 +6,22 @@ import { client } from '../../../lib/sanity';
 import Link from 'next/link';
 
 export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 async function getPosts() {
   try {
-    const query = `*[_type == "post" && defined(title)] | order(publishedAt desc) {
-      _id,
-      title,
-      slug,
-      publishedAt,
-      excerpt,
-      "author": author->name
-    }`;
-    
-    const posts = await client.fetch(query);
+ const posts = await client.fetch(
+      `*[_type == "post"] | order(publishedAt desc)`,
+      {},
+      { 
+        cache: 'no-store',
+        next: { revalidate: 0 }
+      }
+    );
     return posts;
   } catch (error) {
-    console.error('❌ Sanity接続エラー:', error);
+    console.error('Error fetching posts:', error);
     return [];
   }
 }
