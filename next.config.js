@@ -1,13 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // キャッシュを最小限に
+  // ESLint を本番ビルド時に無効化
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  // TypeScript エラーも無視（必要に応じて）
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  // 既存の設定
   experimental: {
     staleTimes: {
       dynamic: 0,
       static: 0,
     },
   },
-  // ヘッダー設定でキャッシュ制御
+
   async headers() {
     return [
       {

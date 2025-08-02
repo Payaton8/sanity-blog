@@ -5,7 +5,7 @@ export interface Post {
     current: string;
   };
   publishedAt: string;
-  body: any;
+  body: unknown;
   tags: {
     name: string;
     slug: {
