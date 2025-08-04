@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# サイトマップの場所を指定
+Sitemap: https://eng-info.com/sitemap.xml
+
+# クロール不要なページを除外
+Disallow: /studio
+Disallow: /api

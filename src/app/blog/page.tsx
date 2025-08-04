@@ -1,6 +1,11 @@
 import { blogMetadata } from '../metadata';
+import { generateMetadata } from '../../lib/metadata'; // ← 追加
 
-export const metadata = blogMetadata;
+// 強化されたメタデータ
+export const metadata = generateMetadata({
+  title: '技術ブログ一覧 - AI・英語学習・プログラミング',
+  description: 'AI技術、英語学習法、プログラミング（Next.js, React, TypeScript）に関する実践的な記事一覧。アメリカ留学経験を活かした学習ノウハウとウェブ開発の最新情報を発信中。',
+});
 
 import { client } from '../../../lib/sanity';
 import Link from 'next/link';
@@ -11,7 +16,7 @@ export const fetchCache = 'force-no-store';
 
 async function getPosts() {
   try {
- const posts = await client.fetch(
+    const posts = await client.fetch(
       `*[_type == "post"] | order(publishedAt desc)`,
       {},
       { 
