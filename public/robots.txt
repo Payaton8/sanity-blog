@@ -7,3 +7,5 @@ Sitemap: https://eng-info.com/sitemap.xml
 # クロール不要なページを除外
 Disallow: /studio
 Disallow: /api
+Disallow: /_next/
+Disallow: /admin/
