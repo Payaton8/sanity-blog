@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://hayablog.vercel.app'; // 後で実際のURLに変更
+  const baseUrl = 'https://eng-info.com'; // ← ドメイン修正
 
   return {
     rules: [
@@ -9,12 +9,11 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: '*',
         allow: '/',
         disallow: [
+          '/studio',    // ← 追加（Sanity管理画面）
           '/api/',
           '/_next/',
           '/admin/',
-          '*.json',
-          '/og-image', // OGP画像生成エンドポイントは直接アクセス不要
-        ],
+      ],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
