@@ -1,26 +1,29 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
+import { generateMetadata } from '@/lib/metadata' // ← 追加
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'HAYABLOG - AI × 英語学習サイト',
-  description: 'AI × 英語学習サイト。アメリカ留学経験を活かした技術ブログとウェブ開発のノウハウを発信。',
-}
+// 新しいメタデータシステムを使用
+export const metadata = generateMetadata({
+  title: 'AI × 英語学習サイト',
+  description: 'AI × 英語学習サイト。アメリカ留学経験を活かした技術ブログとウェブ開発のノウハウを発信。'
+})
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  // 構造化データ
+  // 構造化データ（URLを正しいドメインに更新）
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "HAYABLOG",
     "description": "AI・英語学習サイト。アメリカ留学経験を活かし英語学習ノウハウを発信。",
-    "url": "https://hayablog.vercel.app",
+    "url": "https://eng-info.com", // ← ドメイン更新
     "author": {
       "@type": "Person",
       "name": "はやと",
@@ -31,12 +34,12 @@ export default function RootLayout({
       "name": "HAYABLOG",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://hayablog.vercel.app/og-image"
+        "url": "https://eng-info.com/og-image" // ← ドメイン更新
       }
     },
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://hayablog.vercel.app/blog?search={search_term_string}",
+      "target": "https://eng-info.com/blog?search={search_term_string}", // ← ドメイン更新
       "query-input": "required name=search_term_string"
     }
   };
@@ -51,7 +54,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <GoogleAnalytics />
+      </body>
     </html>
   )
 }
