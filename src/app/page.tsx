@@ -86,7 +86,8 @@ export default function HomePage() {
               <p className="text-lg text-gray-700 leading-relaxed">
                 ブログライター<br />
                 アメリカ（ノースアラバマ大学）で1年間の留学経験あり。<br />
-                英語での受け答えはほぼ問題なく。仕事でも使用。<br />
+                ChatGPTを活用した英語学習法から、AIに関する情報まで、
+実体験に基づく有益な情報を分かりやすくお伝えします。<br />
                 <br />
 
               </p>

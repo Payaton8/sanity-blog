@@ -12,6 +12,10 @@ export const siteConfig = {
   },
   keywords: [
     'AI',
+    'AI活用',
+    'ChatGPT',
+    'Google Gemini',
+    'Gemini',
     '英語学習',
     'アメリカ留学',
     'プログラミング',
@@ -22,7 +26,7 @@ export const siteConfig = {
     'React',
     'TypeScript',
     'Sanity',
-    'フルスタック開発'
+  
   ]
 }
 
