@@ -39,7 +39,7 @@ export default function HomePage() {
             playsInline
             className="w-full h-full object-cover"
           >
-            <source src="https://cdn.midjourney.com/video/950f86fa-0bcf-426e-9dbd-826c417226ff/2.mp4" type="video/mp4" />
+            <source src="https://cdn.midjourney.com/video/65c64883-c3e6-4983-81e3-664f7ca3331c/2.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
