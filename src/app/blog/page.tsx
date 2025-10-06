@@ -3,7 +3,7 @@ import { generateMetadata } from '../../lib/metadata'; // ← 追加
 
 // 強化されたメタデータ
 export const metadata = generateMetadata({
-  title: '技術ブログ一覧 - AI・英語学習・プログラミング',
+  title: '技術ブログ一覧 - AI活用・英語学習・プログラミング',
   description: 'AI技術、英語学習法、プログラミング（Next.js, React, TypeScript）に関する実践的な記事一覧。アメリカ留学経験を活かした学習ノウハウとウェブ開発の最新情報を発信中。',
 });
 
@@ -35,21 +35,21 @@ export default async function BlogPage() {
   const posts = await getPosts();
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white text-gray-900">
       {/* ヘッダー */}
-      <header className="border-b border-gray-800">
+      <header className="border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
+          <div className="max-w-6xl mx-auto px-4 py-6">
             <Link href="/" className="text-3xl font-black text-white hover:text-yellow-400 transition-colors">
               HAYABLOG
             </Link>
             <nav className="flex items-center space-x-8">
-              <Link href="/" className="text-gray-300 hover:text-white transition-colors">ホーム</Link>
+              <Link href="/" className="text-gray-900 hover:text-gray-600 transition-colors">ホーム</Link>
               <Link href="/blog" className="text-yellow-400 font-bold">ブログ</Link>
             </nav>
           </div>
         </div>
-      </header>
+      <Link href="/blog" className="text-gray-600 font-bold hover:text-gray-900"></Link></header>
 
       {/* ヒーローセクション */}
       <section className="py-20 px-4 text-center border-b border-gray-800">
@@ -59,7 +59,7 @@ export default async function BlogPage() {
               BLOG
             </span>
           </h1>
-          <p className="text-xl text-gray-300 mb-8">AIと英語ノウハウを発信</p>
+          <p className="text-xl text-gray-300 mb-8">AI活用ノウハウを発信</p>
           
           <div className="flex justify-center space-x-4">
             <span className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold">記事数: {posts.length}</span>

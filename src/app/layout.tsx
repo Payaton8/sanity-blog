@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 // 新しいメタデータシステムを使用
 export const metadata = generateMetadata({
-  title: 'AI × 英語学習サイト',
-  description: 'AI × 英語学習サイト。アメリカ留学経験を活かした技術ブログとウェブ開発のノウハウを発信。'
+  title: 'AI活用サイト',
+  description: 'AI活用サイト。アメリカ留学経験を活かした技術ブログとウェブ開発のノウハウを発信。'
 })
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "HAYABLOG",
-    "description": "AI・英語学習サイト。アメリカ留学経験を活かし英語学習ノウハウを発信。",
+    "description": "AI活用サイト。",
     "url": "https://eng-info.com", // ← ドメイン更新
     "author": {
       "@type": "Person",
