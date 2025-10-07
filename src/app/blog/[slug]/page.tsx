@@ -1,7 +1,8 @@
 import { generateArticleMetadata } from '../../metadata';
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = await getPost(params.slug);
+  const resolvedParams = await params; // この行を追加
+  const post = await getPost(resolvedParams.slug); // params.slug を resolvedParams.slug に変更
   
   if (!post) {
     return {
@@ -38,7 +39,8 @@ async function getPost(slug: string) {
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const post = await getPost(params.slug);
+  const resolvedParams = await params; // この行を追加
+  const post = await getPost(resolvedParams.slug); // params.slug を resolvedParams.slug に変更
 
   if (!post) {
     return (
