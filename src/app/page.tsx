@@ -31,7 +31,7 @@ export default function HomePage() {
 </header>
 
         {/* 動画背景 */}
-        <div className="absolute inset-0 w-full h-full">
+        <div className="absolute inset-0 w-full h-[120vh]">
           <video 
             autoPlay 
             muted 

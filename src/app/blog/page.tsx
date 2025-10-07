@@ -84,7 +84,7 @@ export default async function BlogPage() {
               >
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-white mb-3 hover:text-yellow-400 transition-colors">
-                    <Link href={`/blog/${post.slug?.current || post.slug}`}>
+                   <Link href={`/blog/${post.slug?.current || ''}`}>
                       {post.title || 'タイトル未設定'}
                     </Link>
                   </h3>
@@ -98,7 +98,7 @@ export default async function BlogPage() {
                       }) : 
                       '日付未設定'
                     }
-                    {post.author && <span> • by {post.author}</span>}
+                    {post.author && <span> • by {typeof post.author === 'string' ? post.author : post.author.name}</span>}
                   </div>
 
                   <p className="text-gray-400 mb-4">
