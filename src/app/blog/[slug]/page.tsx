@@ -25,14 +25,20 @@ import Link from 'next/link';
 
 async function getPost(slug: string) {
   const query = `*[_type == "post" && slug.current == $slug][0] {
-    _id,
-    title,
-    slug,
-    publishedAt,
-    excerpt,
-    body,
-    "author": author->name
-  }`;
+  _id,
+  title,
+  slug,
+  publishedAt,
+  excerpt,
+  body,
+  "author": author->name,
+  mainImage {
+    asset-> {
+      _id,
+      url
+    }
+  }
+}`;
   
   const post = await client.fetch(query, { slug });
   return post;
@@ -78,6 +84,17 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
           {post.title}
         </h1>
+
+        {/* アイキャッチ画像 */}
+{post.mainImage?.asset?.url && (
+  <div className="mb-8">
+    <img 
+      src={post.mainImage.asset.url}
+      alt={post.title}
+      className="w-full h-auto rounded-lg object-cover"
+    />
+  </div>
+)}
 
         {/* メタ情報 */}
         <div className="flex items-center gap-6 mb-8 pb-8 border-b border-gray-800">
