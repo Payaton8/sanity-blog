@@ -54,7 +54,7 @@ export default function HomePage() {
             
             
             <div className="text-4xl md:text-6xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
-              AI × 英語学習サイト
+              AI活用法サイト
             </div>
           </div>
         </div>
