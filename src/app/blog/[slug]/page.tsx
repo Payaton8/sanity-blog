@@ -62,7 +62,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <div className="max-w-3xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <Link href="/" className="text-3xl font-black text-white hover:text-yellow-400 transition-colors">
-              HAYATO
+              HAYABLOG
             </Link>
             <nav className="flex items-center space-x-8">
               <Link href="/" className="text-gray-300 hover:text-white transition-colors">ホーム</Link>
