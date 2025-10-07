@@ -1,8 +1,8 @@
 import { generateArticleMetadata } from '../../metadata';
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const resolvedParams = await params; // この行を追加
-  const post = await getPost(resolvedParams.slug); // params.slug を resolvedParams.slug に変更
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
   
   if (!post) {
     return {
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return generateArticleMetadata(
     post.title,
     post.excerpt || post.title,
-    params.slug,
+    slug,
     post.publishedAt,
     post.mainImage?.asset?.url
   );
@@ -38,9 +38,9 @@ async function getPost(slug: string) {
   return post;
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const resolvedParams = await params; // この行を追加
-  const post = await getPost(resolvedParams.slug); // params.slug を resolvedParams.slug に変更
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
 
   if (!post) {
     return (
