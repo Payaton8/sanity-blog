@@ -59,7 +59,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     <div className="min-h-screen bg-black text-white">
       {/* ヘッダー */}
       <header className="border-b border-gray-800">
-        <div className="max-w-6xl mx-auto px-4 py-6">
+        <div className="max-w-3xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <Link href="/" className="text-3xl font-black text-white hover:text-yellow-400 transition-colors">
               HAYATO
@@ -73,7 +73,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       </header>
 
       {/* 記事コンテンツ */}
-      <article className="max-w-4xl mx-auto px-4 py-12">
+      <article className="max-w-2xl mx-auto px-6 py-12">
         {/* タイトル */}
         <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
           {post.title}
