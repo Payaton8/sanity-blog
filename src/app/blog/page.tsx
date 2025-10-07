@@ -37,15 +37,15 @@ export default async function BlogPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       {/* ヘッダー */}
-      <header className="border-b border-gray-200">
+      <header className="border-b border-gray-800 bg-black">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="max-w-6xl mx-auto px-4 py-6">
-            <Link href="/" className="text-3xl font-black text-white hover:text-yellow-400 transition-colors">
-              HAYABLOG
-            </Link>
+            <Link href="/" className="text-white hover:text-gray-300 transition-colors">
+             HAYABLOG
+           </Link>
             <nav className="flex items-center space-x-8">
-              <Link href="/" className="text-gray-900 hover:text-gray-600 transition-colors">ホーム</Link>
-              <Link href="/blog" className="text-yellow-400 font-bold">ブログ</Link>
+             <Link href="/" className="text-white hover:text-gray-300 transition-colors">ホーム</Link>
+             <Link href="/blog" className="text-yellow-400 font-bold hover:text-yellow-300">ブログ</Link>
             </nav>
           </div>
         </div>
