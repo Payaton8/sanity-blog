@@ -30,7 +30,17 @@ async function getPost(slug: string) {
   slug,
   publishedAt,
   excerpt,
-  body,
+  body[] {
+  ...,
+  _type == "image" => {
+    _type,
+    asset-> {
+      _id,
+      url
+    },
+    altcd
+  }
+},
   "author": author->name,
   mainImage {
     asset-> {
