@@ -7,10 +7,11 @@ import { generateMetadata } from '@/lib/metadata' // ← 追加
 const inter = Inter({ subsets: ['latin'] })
 
 // 新しいメタデータシステムを使用
-export const metadata = generateMetadata({
+export const metadata = {
   title: 'AI活用サイト',
   description: 'AI活用サイト。アメリカ留学経験を活かした技術ブログとウェブ開発のノウハウを発信。'
-})
+  
+} as Metadata
 
 export default function RootLayout({
   children,
@@ -45,19 +46,20 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="ja">
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
-          }}
-        />
-      </head>
-      <body className={inter.className}>
-        {children}
-        <GoogleAnalytics />
-      </body>
-    </html>
+  <html lang="ja">
+    <head>
+      <meta name="google-site-verification" content="IrxJyHeprS1rq7k6GcVWi1vwH7DQXVPu4JPfqlQzVRc" />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
+    </head>
+    <body className={inter.className}>
+      {children}
+      <GoogleAnalytics />
+    </body>
+  </html>
   )
 }
