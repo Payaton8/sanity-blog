@@ -137,7 +137,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-6
   [&_li]:text-gray-800 [&_li]:my-2
   [&_strong]:text-gray-900 [&_strong]:font-bold
-  [&_a]:text-blue-600 [&_a]:no-underline hover:[&_a]:underline">
+  [&_a]:text-blue-600 [&_a]:no-underline hover:[&_a]:underline
+[&_blockquote]:border-l-4 [&_blockquote]:border-blue-500 [&_blockquote]:bg-blue-50 [&_blockquote]:pl-6 [&_blockquote]:py-4 [&_blockquote]:my-6 [&_blockquote]:italic [&_blockquote]:text-gray-700">
           {post.body ? (
             <div className="text-gray-800 leading-relaxed space-y-6">
               <PortableText 
