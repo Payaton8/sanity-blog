@@ -3,7 +3,7 @@ import { generateArticleMetadata } from '../../metadata';
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getPost(slug);
-  
+
   if (!post) {
     return {
       title: '記事が見つかりません | HAYABLOG',
@@ -22,6 +22,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 import { client } from '../../../../lib/sanity';
 import { PortableText } from '@portabletext/react';
 import Link from 'next/link';
+import Header from '@/components/Header';
+import FallingLeaves from '@/components/FallingLeaves';
 
 async function getPost(slug: string) {
   const query = `*[_type == "post" && slug.current == $slug][0] {
@@ -38,7 +40,7 @@ async function getPost(slug: string) {
       _id,
       url
     },
-    altcd
+    alt
   }
 },
   "author": author->name,
@@ -49,7 +51,7 @@ async function getPost(slug: string) {
     }
   }
 }`;
-  
+
   const post = await client.fetch(query, { slug });
   return post;
 }
@@ -62,8 +64,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4 text-red-400">記事が見つかりません</h1>
-          <Link href="/blog" className="text-yellow-400 hover:text-yellow-300 underline">
+          <h1 className="text-4xl font-serif font-bold mb-4 text-gold">記事が見つかりません</h1>
+          <Link href="/blog" className="text-gray-400 hover:text-white underline tracking-widest">
             ブログ一覧に戻る
           </Link>
         </div>
@@ -72,130 +74,153 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   }
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
-      {/* ヘッダー */}
-      <header className="border-b border-gray-800">
-        <div className="max-w-3xl mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="text-gray-900 hover:text-gray-600 transition-colors">
-              HAYABLOG
-            </Link>
-            <nav className="flex items-center space-x-8">
-              <Link href="/" className="text-gray-300 hover:text-white transition-colors">ホーム</Link>
-              <Link href="/blog" className="text-gray-300 hover:text-white transition-colors">ブログ</Link>
-            </nav>
+    <div className="min-h-screen bg-washi-texture text-paper-white font-jp selection:bg-blood-red selection:text-white">
+      {/* 背景エフェクト */}
+      <FallingLeaves />
+      <div className="fixed inset-0 bg-gradient-to-b from-black/30 via-transparent to-samurai-black pointer-events-none z-0" />
+
+      {/* 統一ヘッダー */}
+      <Header />
+
+      {/* 記事記事ヘッダー */}
+      <header className="relative pt-48 pb-20 px-4 z-10">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-block border-b border-gold/50 pb-2 mb-8">
+            <span className="text-gold tracking-[0.3em] text-sm uppercase">Article</span>
+          </div>
+
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-10 leading-relaxed tracking-wide drop-shadow-lg">
+            {post.title}
+          </h1>
+
+          <div className="flex items-center justify-center gap-6 text-sm text-gray-400 font-light tracking-widest">
+            <div className="flex items-center gap-2">
+              <span className="w-1 h-1 bg-gold rounded-full"></span>
+              <span>
+                {post.publishedAt ?
+                  new Date(post.publishedAt).toLocaleDateString('ja-JP', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  }) :
+                  '日付未設定'
+                }
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-1 h-1 bg-gold rounded-full"></span>
+              <span>{post.author || 'はやと'}</span>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* 記事コンテンツ */}
-      <article className="max-w-2xl mx-auto px-6 py-12">
-        {/* タイトル */}
-        <h1 className="text-4xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
-          {post.title}
-        </h1>
-
+      {/* コンテンツエリア */}
+      <article className="relative max-w-3xl mx-auto px-6 pb-32 z-10">
         {/* アイキャッチ画像 */}
-{post.mainImage?.asset?.url && (
-  <div className="mb-8">
-    <img 
-      src={post.mainImage.asset.url}
-      alt={post.title}
-      className="w-full h-auto rounded-lg object-cover"
-    />
-  </div>
-)}
-
-        {/* メタ情報 */}
-        <div className="flex items-center gap-3 mb-8 pb-8 border-b border-gray-200">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-red-500 rounded-full flex items-center justify-center">
-              <img 
-  src="/profile.png.JPG" 
-  alt="はやとのプロフィール画像"
-  className="w-full h-full object-cover"
-/>
-            </div>
-            <div>
-              <div className="text-gray-900 font-medium">{post.author || 'はやと'}</div>
-              <div className="text-gray-500 text-sm">Author</div>
+        {post.mainImage?.asset?.url && (
+          <div className="mb-20 rounded-sm overflow-hidden shadow-2xl border border-white/10 group">
+            <div className="relative aspect-video">
+              <img
+                src={post.mainImage.asset.url}
+                alt={post.title}
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
             </div>
           </div>
-          
-          <div className="text-gray-400">
-            <div className="text-gray-600 font-medium">
-              {post.publishedAt ? 
-                new Date(post.publishedAt).toLocaleDateString('ja-JP', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                }) : 
-                '日付未設定'
-              }
-            </div>
-            <div className="text-gray-600">公開日</div>
-          </div>
-        </div>
+        )}
 
         {/* 記事本文 */}
-        <div className="text-gray-800 leading-relaxed space-y-6 
-  [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:mt-12 [&_h2]:mb-6 [&_h2]:pb-3 [&_h2]:border-b [&_h2]:border-gray-200 [&_h2]:text-gray-900
-  [&_h3]:text-2xl [&_h3]:font-bold [&_h3]:mt-8 [&_h3]:mb-4 [&_h3]:text-gray-900
-  [&_h4]:text-xl [&_h4]:font-bold [&_h4]:mt-6 [&_h4]:mb-3 [&_h4]:text-gray-900
-  [&_p]:text-gray-800 [&_p]:leading-relaxed [&_p]:mb-6
-  [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-6
-  [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-6
-  [&_li]:text-gray-800 [&_li]:my-2
-  [&_strong]:text-gray-900 [&_strong]:font-bold
-  [&_a]:text-blue-600 [&_a]:no-underline hover:[&_a]:underline
-[&_blockquote]:border-l-4 [&_blockquote]:border-blue-500 [&_blockquote]:bg-blue-50 [&_blockquote]:pl-6 [&_blockquote]:py-4 [&_blockquote]:my-6 [&_blockquote]:italic [&_blockquote]:text-gray-700">
+        <div className="prose prose-invert prose-lg max-w-none
+          prose-headings:font-serif prose-headings:tracking-widest prose-headings:text-gold
+          prose-h2:text-3xl prose-h2:border-b prose-h2:border-gold/30 prose-h2:pb-4 prose-h2:mt-16 prose-h2:mb-8
+          prose-h3:text-2xl prose-h3:mt-12 prose-h3:mb-6
+          prose-p:leading-loose prose-p:text-gray-300 prose-p:mb-8 prose-p:font-light prose-p:tracking-wide
+          prose-strong:text-white prose-strong:font-bold
+          prose-a:text-gold prose-a:underline hover:prose-a:text-white prose-a:transition-colors
+          prose-blockquote:border-l-gold prose-blockquote:bg-white/5 prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:not-italic prose-blockquote:text-gray-400
+          prose-li:text-gray-300 prose-li:marker:text-gold
+          [&_img]:rounded-sm [&_img]:shadow-lg [&_img]:border [&_img]:border-white/5
+        ">
           {post.body ? (
-            <div className="text-gray-800 leading-relaxed space-y-6">
-              <PortableText 
-  value={post.body}
-  components={{
-    types: {
-      image: ({value}: any) => (
-        <div className="my-8">
-          <img 
-            src={value.asset.url} 
-            alt={value.alt || ''} 
-            className="w-full h-auto rounded-lg"
-          />
-        </div>
-      )
-    }
-  }}
-/>
-            </div>
+            <PortableText
+              value={post.body}
+              components={{
+                types: {
+                  image: ({ value }: any) => (
+                    <div className="my-12">
+                      <figure>
+                        <img
+                          src={value.asset.url}
+                          alt={value.alt || ''}
+                          className="w-full h-auto"
+                        />
+                        {value.caption && (
+                          <figcaption className="text-center text-sm text-gray-500 mt-2 tracking-wider">
+                            {value.caption}
+                          </figcaption>
+                        )}
+                      </figure>
+                    </div>
+                  )
+                }
+              }}
+            />
           ) : (
-            <div className="bg-gray-100 border border-gray-200 rounded-2xl p-8 text-center">
-              <div className="text-6xl mb-4">📝</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">記事本文を準備中....</h3>
-              <p className="text-gray-600 mb-6">
-                Sanity Studioで記事本文を作成してください。
-              </p>
-              <Link 
-                href="http://localhost:3333"
-                target="_blank"
-                className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-500 transition-colors"
+            <div className="text-center py-20 border border-white/10 bg-black/30 backdrop-blur-sm">
+              <p className="text-gray-500 tracking-widest mb-6">本文がありません</p>
+              <Link
+                href="/blog"
+                className="inline-block text-gold hover:text-white border-b border-gold hover:border-white transition-all pb-1 tracking-widest text-sm"
               >
-                Sanity Studioを開く
+                ブログ一覧に戻る
               </Link>
             </div>
           )}
         </div>
 
+        {/* プロフィール (簡易版) */}
+        <div className="mt-24 pt-12 border-t border-gold/30">
+          <div className="flex items-center gap-6 bg-black/40 p-8 border border-white/5 backdrop-blur-sm shadow-xl">
+            <div className="w-20 h-20 flex-shrink-0 bg-gray-800 rounded-full overflow-hidden border border-gold/50">
+              <img src="/profile.jpg" alt="はやと" className="w-full h-full object-cover" />
+            </div>
+            <div>
+              <h3 className="text-lg font-serif text-white mb-2 tracking-widest">はやと</h3>
+              <p className="text-gray-400 text-sm leading-relaxed font-light">
+                ブログライター。アメリカ留学経験を活かし、AI技術と語学学習の融合を探求中。
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* 戻るボタン */}
-        <div className="mt-12 pt-8 border-t border-gray-800 text-center">
-          <Link 
+        <div className="mt-16 text-center">
+          <Link
             href="/blog"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-500 transition-colors"
+            className="group inline-flex items-center justify-center px-10 py-4 border border-white/20 text-white hover:border-gold hover:text-gold transition-all duration-500 tracking-[0.2em] text-sm hover:glow-gold bg-black/50 backdrop-blur-sm"
           >
-            ブログ一覧に戻る
+            <span className="transform group-hover:-translate-x-1 transition-transform duration-300 mr-2">←</span>
+            BACK TO LIST
           </Link>
         </div>
       </article>
+
+      {/* フッター (共通化推奨だが一旦ここに配置) */}
+      <footer className="bg-black text-white py-16 px-6 border-t border-white/5 relative z-10">
+        <div className="max-w-6xl mx-auto flex flex-col items-center">
+          <Link href="/" className="text-3xl font-serif tracking-[0.3em] mb-8 text-white/50 hover:text-gold-gradient transition-colors">HAYABLOG</Link>
+          <div className="flex space-x-10 mb-10">
+            <a href="#" className="text-gray-500 hover:text-gold transition-colors tracking-widest text-sm">TWITTER</a>
+            <a href="#" className="text-gray-500 hover:text-gold transition-colors tracking-widest text-sm">YOUTUBE</a>
+            <a href="#" className="text-gray-500 hover:text-gold transition-colors tracking-widest text-sm">GITHUB</a>
+          </div>
+          <p className="text-gray-700 text-xs tracking-[0.2em]">
+            &copy; 2024 HAYATO. ALL RIGHTS RESERVED.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

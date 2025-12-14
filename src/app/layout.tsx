@@ -1,16 +1,27 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Cinzel, Noto_Serif_JP } from 'next/font/google'
 import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
-import { generateMetadata } from '@/lib/metadata' // ← 追加
+import { generateMetadata } from '@/lib/metadata'
 
-const inter = Inter({ subsets: ['latin'] })
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  variable: '--font-cinzel',
+  display: 'swap',
+})
+
+const notoSerifJP = Noto_Serif_JP({
+  subsets: ['latin'],
+  variable: '--font-noto-serif-jp',
+  weight: ['200', '400', '700', '900'],
+  display: 'swap',
+})
 
 // 新しいメタデータシステムを使用
 export const metadata = {
   title: 'AI活用サイト',
   description: 'AI活用サイト。アメリカ留学経験を活かした技術ブログとウェブ開発のノウハウを発信。'
-  
+
 } as Metadata
 
 export default function RootLayout({
@@ -46,20 +57,20 @@ export default function RootLayout({
   };
 
   return (
-  <html lang="ja">
-    <head>
-      <meta name="google-site-verification" content="IrxjyHeprSirq7K6oCVM1IvwU7DoXVPo4JPFqiQzVRc" />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData),
-        }}
-      />
-    </head>
-    <body className={inter.className}>
-      {children}
-      <GoogleAnalytics />
-    </body>
-  </html>
+    <html lang="ja" className={`${cinzel.variable} ${notoSerifJP.variable}`}>
+      <head>
+        <meta name="google-site-verification" content="IrxjyHeprSirq7K6oCVM1IvwU7DoXVPo4JPFqiQzVRc" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
+      </head>
+      <body className="bg-samurai-black text-paper-white">
+        {children}
+        <GoogleAnalytics />
+      </body>
+    </html>
   )
 }

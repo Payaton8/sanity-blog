@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import emailjs from 'emailjs-com';
+import Header from '@/components/Header';
+import FallingLeaves from '@/components/FallingLeaves';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -22,153 +24,101 @@ export default function ContactPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-  setSubmitStatus('idle');
-  
-  // バリデーション
-  if (!formData.name || !formData.email || !formData.message) {
-    alert('必須項目を入力してください。');
-    setIsSubmitting(false);
-    return;
-  }
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
 
-  try {
-    // デバッグ: 環境変数の確認
-    console.log('Service ID:', process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID);
-    console.log('Template ID:', process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID);
-    console.log('Public Key:', process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
+    // バリデーション
+    if (!formData.name || !formData.email || !formData.message) {
+      alert('必須項目を入力してください。');
+      setIsSubmitting(false);
+      return;
+    }
 
-    // EmailJSで送信
-    const templateParams = {
-      name: formData.name,
-      email: formData.email,
-      subject: formData.subject || 'お問い合わせ',
-      message: formData.message,
-      sent_at: new Date().toLocaleString('ja-JP')
-    };
+    try {
+      const templateParams = {
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject || 'お問い合わせ',
+        message: formData.message,
+        sent_at: new Date().toLocaleString('ja-JP')
+      };
 
-    console.log('送信パラメータ:', templateParams);
+      await emailjs.send(
+        'service_cjrm2g8',
+        'template_42tqm0s',
+        templateParams,
+        'ukyvN__bYbvsswiRh'
+      );
 
-    const result = await emailjs.send(
-  'service_cjrm2g8',
-  'template_42tqm0s',
-  templateParams,
-  'ukyvN__bYbvsswiRh'
-);
+      setSubmitStatus('success');
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
 
-    console.log('送信成功:', result);
-    setSubmitStatus('success');
-    
-    // フォームをリセット
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
-
-  } catch (error) {
-    console.error('送信エラー詳細:', error);
-    setSubmitStatus('error');
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+    } catch (error) {
+      console.error('送信エラー詳細:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* ヘッダー */}
-      <header className="border-b border-gray-800">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="text-3xl font-black text-white hover:text-yellow-400 transition-colors">
-              HAYABLOG
-            </Link>
-            <nav className="flex items-center space-x-8">
-              <Link href="/" className="text-gray-300 hover:text-white transition-colors font-medium">ホーム</Link>
-              <Link href="/blog" className="text-gray-300 hover:text-white transition-colors font-medium">ブログ</Link>
-              <Link href="/#about" className="text-gray-300 hover:text-white transition-colors font-medium">プロフィール</Link>
-              <Link href="/contact" className="text-yellow-400 font-bold">お問い合わせ</Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-washi-texture text-paper-white font-jp selection:bg-blood-red selection:text-white">
+      {/* 背景エフェクト */}
+      <FallingLeaves />
+      <div className="fixed inset-0 bg-gradient-to-b from-black/30 via-transparent to-samurai-black pointer-events-none z-0" />
 
-      {/* パンくずナビ */}
-      <div className="border-b border-gray-800">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <nav className="flex items-center space-x-2 text-sm text-gray-400">
-            <Link href="/" className="hover:text-white transition-colors">ホーム</Link>
-            <span>›</span>
-            <span className="text-yellow-400">お問い合わせ</span>
-          </nav>
+      {/* 統一ヘッダー */}
+      <Header />
+
+      {/* ヒーローセクション */}
+      <div className="relative pt-48 pb-20 px-4 text-center z-10">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-serif text-gold-gradient tracking-widest mb-8 opacity-90 animate-fade-in-up">
+            CONTACT
+          </h1>
+          <div className="w-16 h-[1px] bg-gold mx-auto mb-10"></div>
+          <p className="text-lg text-gray-400 mb-10 tracking-[0.4em] font-light">
+            お問い合わせ
+          </p>
+
+          <div className="flex justify-center flex-wrap gap-4">
+            <span className="border border-gold/40 text-gold/80 px-6 py-2 text-xs tracking-widest uppercase bg-black/40 backdrop-blur-sm">WORK</span>
+            <span className="border border-white/20 text-gray-400 px-6 py-2 text-xs tracking-widest uppercase bg-black/40 backdrop-blur-sm">COLLAB</span>
+            <span className="border border-white/20 text-gray-400 px-6 py-2 text-xs tracking-widest uppercase bg-black/40 backdrop-blur-sm">QUESTION</span>
+          </div>
         </div>
       </div>
 
-      {/* ヒーローセクション */}
-      <section className="py-20 px-4 text-center border-b border-gray-800">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-wider">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500">
-              CONTACT
-            </span>
-          </h1>
-          <p className="text-xl text-gray-300 mb-8">お気軽にお問い合わせください</p>
-          
-          <div className="flex justify-center space-x-4">
-            <span className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold">WORK</span>
-            <span className="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-bold">COLLAB</span>
-            <span className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold">QUESTION</span>
-          </div>
-        </div>
-      </section>
-
       {/* メインコンテンツ */}
-      <div className="max-w-4xl mx-auto px-4 py-16">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">お問い合わせフォーム</h2>
-          
+      <div className="relative max-w-3xl mx-auto px-6 pb-32 z-10">
+        <div className="bg-black/60 border border-white/10 p-8 md:p-12 backdrop-blur-md shadow-2xl">
+
           {/* 成功・エラーメッセージ */}
           {submitStatus === 'success' && (
-            <div className="bg-green-900 border border-green-600 rounded-lg p-6 mb-6">
-              <div className="flex items-start gap-3">
-                <span className="text-green-400 text-2xl">✅</span>
-                <div>
-                  <h3 className="text-green-400 font-bold text-lg mb-2">送信完了！</h3>
-                  <p className="text-green-300 mb-2">
-                    お問い合わせありがとうございます。
-                  </p>
-                  <p className="text-green-300 text-sm">
-                    📧 24時間以内にご返信いたします
-                  </p>
-                </div>
-              </div>
+            <div className="bg-green-900/30 border border-green-600/50 rounded p-6 mb-8 text-center animate-fade-in">
+              <h3 className="text-green-400 font-serif tracking-widest text-lg mb-2">送信完了</h3>
+              <p className="text-gray-300 text-sm tracking-wide">お問い合わせありがとうございます。<br />内容を確認次第、ご連絡いたします。</p>
             </div>
           )}
 
           {submitStatus === 'error' && (
-            <div className="bg-red-900 border border-red-600 rounded-lg p-6 mb-6">
-              <div className="flex items-start gap-3">
-                <span className="text-red-400 text-2xl">❌</span>
-                <div>
-                  <h3 className="text-red-400 font-bold text-lg mb-2">送信エラー</h3>
-                  <p className="text-red-300 mb-2">
-                    申し訳ございません。送信に失敗しました。
-                  </p>
-                  <p className="text-red-300 text-sm">
-                    🔄 しばらく待ってから再度お試しください
-                  </p>
-                </div>
-              </div>
+            <div className="bg-red-900/30 border border-red-600/50 rounded p-6 mb-8 text-center animate-fade-in">
+              <h3 className="text-red-400 font-serif tracking-widest text-lg mb-2">送信エラー</h3>
+              <p className="text-gray-300 text-sm tracking-wide">申し訳ございません。送信に失敗しました。<br />時間をおいて再度お試しください。</p>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-8">
             {/* 名前 */}
             <div>
-              <label htmlFor="name" className="block text-white font-medium mb-2">
-                お名前 <span className="text-red-400">*</span>
+              <label htmlFor="name" className="block text-gold/80 text-xs tracking-widest uppercase mb-3">
+                Name <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -177,15 +127,15 @@ export default function ContactPage() {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-yellow-400 focus:outline-none transition-colors"
-                placeholder="山田太郎"
+                className="w-full px-4 py-4 bg-black/40 border border-white/10 text-white placeholder-gray-600 focus:border-gold focus:ring-1 focus:ring-gold focus:outline-none transition-all duration-300 tracking-wide"
+                placeholder="お名前を入力してください"
               />
             </div>
 
             {/* メールアドレス */}
             <div>
-              <label htmlFor="email" className="block text-white font-medium mb-2">
-                メールアドレス <span className="text-red-400">*</span>
+              <label htmlFor="email" className="block text-gold/80 text-xs tracking-widest uppercase mb-3">
+                Email <span className="text-red-500">*</span>
               </label>
               <input
                 type="email"
@@ -194,36 +144,40 @@ export default function ContactPage() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-yellow-400 focus:outline-none transition-colors"
-                placeholder="yamada@example.com"
+                className="w-full px-4 py-4 bg-black/40 border border-white/10 text-white placeholder-gray-600 focus:border-gold focus:ring-1 focus:ring-gold focus:outline-none transition-all duration-300 tracking-wide"
+                placeholder="example@email.com"
               />
             </div>
 
             {/* 件名 */}
             <div>
-              <label htmlFor="subject" className="block text-white font-medium mb-2">
-                件名
+              <label htmlFor="subject" className="block text-gold/80 text-xs tracking-widest uppercase mb-3">
+                Subject
               </label>
-              <select
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:border-yellow-400 focus:outline-none transition-colors"
-              >
-                <option value="">件名を選択してください</option>
-                <option value="お仕事のご依頼">💼 お仕事のご依頼</option>
-                <option value="コラボレーション">🤝 コラボレーション</option>
-                <option value="技術的な質問">💻 技術的な質問</option>
-                <option value="ブログについて">📝 ブログについて</option>
-                <option value="その他">💬 その他</option>
-              </select>
+              <div className="relative">
+                <select
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  className="w-full px-4 py-4 bg-black/40 border border-white/10 text-white focus:border-gold focus:ring-1 focus:ring-gold focus:outline-none transition-all duration-300 tracking-wide appearance-none cursor-pointer"
+                >
+                  <option value="" className="text-gray-500">件名を選択してください</option>
+                  <option value="お仕事のご依頼" className="text-black">お仕事のご依頼</option>
+                  <option value="コラボレーション" className="text-black">コラボレーション</option>
+                  <option value="技術的な質問" className="text-black">技術的な質問</option>
+                  <option value="その他" className="text-black">その他</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gold/50">
+                  ▼
+                </div>
+              </div>
             </div>
 
             {/* メッセージ */}
             <div>
-              <label htmlFor="message" className="block text-white font-medium mb-2">
-                メッセージ <span className="text-red-400">*</span>
+              <label htmlFor="message" className="block text-gold/80 text-xs tracking-widest uppercase mb-3">
+                Message <span className="text-red-500">*</span>
               </label>
               <textarea
                 id="message"
@@ -231,50 +185,51 @@ export default function ContactPage() {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                rows={6}
-                className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-yellow-400 focus:outline-none transition-colors resize-vertical"
+                rows={8}
+                className="w-full px-4 py-4 bg-black/40 border border-white/10 text-white placeholder-gray-600 focus:border-gold focus:ring-1 focus:ring-gold focus:outline-none transition-all duration-300 tracking-wide resize-y leading-relaxed"
                 placeholder="お問い合わせ内容をご記入ください..."
               />
             </div>
 
             {/* 送信ボタン */}
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-yellow-400 text-black px-8 py-4 rounded-lg font-bold hover:bg-yellow-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg"
-            >
-              {isSubmitting ? (
-                <>
-                  <span className="animate-spin">⏳</span>
-                  送信中...
-                </>
-              ) : (
-                <>
-                  <span>📤</span>
-                  送信する
-                </>
-              )}
-            </button>
+            <div className="pt-4 text-center">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="group relative inline-flex items-center justify-center px-12 py-4 bg-transparent border border-gold/50 text-gold font-serif tracking-[0.2em] hover:bg-gold hover:text-black transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-[0_0_20px_rgba(204,170,108,0.4)]"
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center gap-3">
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    SENDING...
+                  </span>
+                ) : (
+                  <span className="relative z-10 flex items-center gap-2">
+                    SEND MESSAGE
+                    <span className="transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+                  </span>
+                )}
+              </button>
+            </div>
           </form>
         </div>
       </div>
 
-      {/* フッター */}
-      <footer className="bg-gray-900 border-t border-gray-700 py-12 px-4 mt-16">
-        <div className="max-w-6xl mx-auto text-center">
-          <h3 className="text-2xl font-black text-white mb-4">HAYABLOG</h3>
-          <p className="text-gray-400 mb-8">お気軽にお問い合わせください</p>
-          
-          <Link 
-            href="/"
-            className="inline-block bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold hover:bg-yellow-300 transition-colors"
-          >
-            ホームに戻る
-          </Link>
-          
-          <div className="mt-8 pt-8 border-t border-gray-800 text-gray-400">
-            <p>&copy; 2024 HAYABLOG. All Rights Reserved.</p>
+      {/* フッター (共通化推奨だが一旦ここに配置) */}
+      <footer className="bg-black text-white py-16 px-6 border-t border-white/5 relative z-10">
+        <div className="max-w-6xl mx-auto flex flex-col items-center">
+          <Link href="/" className="text-3xl font-serif tracking-[0.3em] mb-8 text-white/50 hover:text-gold-gradient transition-colors">HAYABLOG</Link>
+          <div className="flex space-x-10 mb-10">
+            <a href="#" className="text-gray-500 hover:text-gold transition-colors tracking-widest text-sm">TWITTER</a>
+            <a href="#" className="text-gray-500 hover:text-gold transition-colors tracking-widest text-sm">YOUTUBE</a>
+            <a href="#" className="text-gray-500 hover:text-gold transition-colors tracking-widest text-sm">GITHUB</a>
           </div>
+          <p className="text-gray-700 text-xs tracking-[0.2em]">
+            &copy; 2024 HAYATO. ALL RIGHTS RESERVED.
+          </p>
         </div>
       </footer>
     </div>

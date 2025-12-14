@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 // 基本的なサイト情報
 export const siteConfig = {
 name: 'HAYABLOG',
-description: 'AI × 英語学習サイト。アメリカ留学経験を活かした英語学習ノウハウを発信。',
+description: 'AI活用法サイト。アメリカ留学経験を活かした英語学習ノウハウを発信。',
 url: 'https://hayablog.vercel.app', // 後で実際のURLに変更
 ogImage: '/og-image.jpg',
 creator: 'はやと',
@@ -19,7 +19,7 @@ keywords: [
 };
 // トップページのメタデータ
 export const homeMetadata: Metadata = {
-title: 'HAYABLOG - AI × 英語学習サイト',
+title: 'HAYABLOG - AI活用法サイト',
 description: siteConfig.description,
 keywords: siteConfig.keywords,
 authors: [{ name: siteConfig.creator }],
@@ -36,7 +36,7 @@ images: [
 url: siteConfig.ogImage,
 width: 1200,
 height: 630,
-alt: 'HAYABLOG - AI × 英語学習サイト',
+alt: 'HAYABLOG - AI活用法サイト',
 },
 ],
 },

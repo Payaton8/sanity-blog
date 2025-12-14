@@ -3,145 +3,145 @@ import { homeMetadata } from './metadata';
 export const metadata = homeMetadata;
 
 import Link from 'next/link';
+import FallingLeaves from '@/components/FallingLeaves';
+import Header from '@/components/Header';
 
 export const revalidate = 60;
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* ヒーローセクション - 動画背景付き */}
-      <section className="min-h-screen text-white relative overflow-hidden pt-24">
-{/* 統一ヘッダー */}
-<header className="fixed top-0 left-0 right-0 bg-black/90 backdrop-blur-md border-b border-gray-800 z-50">
-  <div className="max-w-6xl mx-auto px-4 py-6">
-    <div className="flex items-center justify-between">
-      <Link href="/" className="text-3xl font-black text-white hover:text-yellow-400 transition-colors">
-        HAYABLOG
-      </Link>
-      <nav className="flex items-center space-x-8">
-        <Link href="/" className="text-yellow-400 font-bold">ホーム</Link>
-        <Link href="/blog" className="text-gray-300 hover:text-white transition-colors font-medium">ブログ</Link>
-        <Link href="#about" className="text-gray-300 hover:text-white transition-colors font-medium">プロフィール</Link>
-        <Link href="/contact" className="bg-yellow-400 text-black px-4 py-2 rounded-lg font-bold hover:bg-yellow-300 transition-colors">
-  お問い合わせ
-</Link>
-      </nav>
-    </div>
-  </div>
-</header>
+    <div className="min-h-screen bg-washi-texture text-paper-white font-jp selection:bg-blood-red selection:text-white">
+      {/* ヒーローセクション */}
+      <section className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center">
+        {/* 背景エフェクト */}
+        <FallingLeaves />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-samurai-black z-10 pointer-events-none" />
 
-        {/* 動画背景 */}
-        <div className="absolute inset-0 w-full h-[120vh]">
-          <video 
-            autoPlay 
-            muted 
-            loop 
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src="https://cdn.midjourney.com/video/65c64883-c3e6-4983-81e3-664f7ca3331c/2.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-black/50"></div>
-        </div>
+        {/* 統一ヘッダー */}
+        <Header />
 
-        {/* メインコンテンツ */}
-        <div className="relative z-20 flex flex-col items-center justify-center min-h-screen px-4">
-          <div className="text-center mb-12">
-            <div className="text-4xl md:text-6xl lg:text-8xl font-black tracking-wider mb-4">
-              <span className="inline-block animate-pulse">HAYABLOG</span>
-              
-            </div>
-            
-            
-            <div className="text-4xl md:text-6xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+        {/* ヒーローコンテンツ */}
+        <div className="relative z-20 text-center px-4 mt-[-10vh]">
+          <div className="mb-8 animate-fade-in-up">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif text-gold-gradient tracking-widest mb-4 opacity-90 drop-shadow-sm">
+              HAYABLOG
+            </h1>
+            <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent mx-auto my-10"></div>
+            <p className="text-xl md:text-3xl font-light tracking-[0.4em] text-gray-300">
               AI活用法サイト
-            </div>
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mt-16 animate-fade-in-up delay-300">
+            <Link
+              href="/blog"
+              className="group relative px-10 py-4 overflow-hidden bg-transparent border border-white/30 text-white transition-all duration-500 hover:border-gold hover:text-gold hover:glow-gold"
+            >
+              <span className="relative z-10 tracking-[0.3em] text-sm">ブログを読む</span>
+              <div className="absolute inset-0 bg-white/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* About Meセクション */}
-      <section id="about" className="py-20 px-4 bg-white">
+      <section id="about" className="relative py-40 px-6 border-t border-white/5 bg-black/20 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-24 items-center">
             {/* プロフィール画像 */}
-            <div className="relative w-64 h-64 mx-auto lg:mx-0 mb-8">
-  {/* グラデーションボーダー */}
-  <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full p-1">
-    <div className="w-full h-full rounded-full overflow-hidden">
-      <img 
-        src="/profile.png.JPG" 
-        alt="はやとのプロフィール画像"
-        className="w-full h-full object-cover"
-      />
-    </div>
-  </div>
-</div>
+            <div className="relative mx-auto lg:mx-0 group">
+              <div className="relative z-10 w-72 h-96 transition-all duration-700 ease-out overflow-hidden border border-white/10 shadow-2xl">
+                <img
+                  src="/profile.jpg"
+                  alt="はやとのプロフィール画像"
+                  className="w-full h-full object-cover transform scale-105 group-hover:scale-110 transition-transform duration-1000"
+                />
+                <div className="absolute inset-0 ring-1 ring-inset ring-black/20"></div>
+              </div>
+              {/* 装飾的な枠線 */}
+              <div className="absolute -top-6 -left-6 w-32 h-32 border-t border-l border-gold/40 z-0 transition-all duration-500 group-hover:-top-8 group-hover:-left-8"></div>
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 border-b border-r border-gold/40 z-0 transition-all duration-500 group-hover:-bottom-8 group-hover:-right-8"></div>
+            </div>
 
             {/* プロフィール情報 */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">About Me</h2>
-              <h3 className="text-4xl md:text-5xl font-black text-gray-900 mb-6">はやと</h3>
-              
-              <p className="text-lg text-gray-700 leading-relaxed">
-                ブログライター<br />
-                アメリカ（ノースアラバマ大学）で1年間の留学経験あり。<br />
-                ChatGPTを活用した英語学習法から、AIに関する情報まで、
-実体験に基づく有益な情報を分かりやすくお伝えします。<br />
-                <br />
+              <h2 className="text-gold-gradient tracking-[0.3em] text-sm mb-6 uppercase font-serif">About Me</h2>
+              <h3 className="text-4xl md:text-6xl font-serif text-white mb-10 tracking-wide">はやと</h3>
 
-              </p>
+              <div className="space-y-8 text-gray-400 leading-loose tracking-wide font-light text-lg">
+                <p>
+                  ブログライター。<br />
+                  アメリカ・ノースアラバマ大学での留学経験を経て、<br />
+                  現在はAI技術と語学学習の融合を探求しています。
+                </p>
+                <p>
+                  ChatGPTをはじめとする最新AIツールの活用法、<br />
+                  そして実体験に基づいた英語学習ノウハウを、<br />
+                  静謐かつ明快にお伝えします。
+                </p>
+              </div>
 
-              <div className="mt-8">
-  <h4 className="text-xl font-bold text-gray-900 mb-4">証明書</h4>
-  <div className="space-y-4">
-    <div className="flex items-center space-x-4 bg-gray-50 rounded-lg p-4">
-      <img 
-        src="/UNA-certification.jpg" 
-        alt="主要資格証明書"
-        className="w-64 h-48 object-cover rounded-lg"
-      />
-      <div>
-        <p className="font-medium text-gray-800">UNA（University of North Alabama）</p>
-        <p className="text-sm text-gray-600">UNA留学証明書</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
+              <div className="mt-16">
+                <h4 className="text-white text-xl mb-8 tracking-widest border-l-2 border-gold pl-6">Certificate</h4>
+                <div className="flex items-start space-x-8 group">
+                  <div className="w-40 h-28 overflow-hidden border border-white/10 relative shadow-lg">
+                    <img
+                      src="/UNA-certification.jpg"
+                      alt="UNA Certification"
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 transition-transform hover:scale-105"
+                    />
+                  </div>
+                  <div className="pt-2">
+                    <p className="text-white font-serif tracking-wide text-xl">University of North Alabama</p>
+                    <p className="text-gold/80 text-sm mt-2 tracking-wider">留 学 証 明 書</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTAセクション */}
-      <section className="py-20 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          
-          <h3 className="text-6xl md:text-8xl font-black mb-8">Let's Connect</h3>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
+      <section className="relative py-40 px-4 bg-gradient-to-b from-samurai-black to-black text-white overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold/30 to-transparent"></div>
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+
+          <h3 className="text-6xl md:text-8xl font-serif mb-16 tracking-widest text-gold-gradient opacity-90">
+            精 進
+          </h3>
+          <p className="text-gray-400 mb-16 tracking-[0.3em] text-lg font-light">
+            共に学び、共に成長する。
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-8 justify-center">
+            <Link
               href="/blog"
-              className="bg-yellow-400 text-gray-900 px-8 py-4 rounded-2xl font-bold hover:bg-yellow-300 transition-colors"
+              className="bg-gold text-black px-12 py-5 font-bold hover:bg-white transition-colors duration-500 tracking-[0.2em] shadow-[0_0_20px_rgba(204,170,108,0.4)] hover:shadow-[0_0_30px_rgba(204,170,108,0.6)]"
             >
-              ブログを見る
+              ブログ一覧
             </Link>
-            <button className="bg-white/20 text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/30 transition-colors">
+            <Link
+              href="/contact"
+              className="border border-white/20 text-white px-12 py-5 hover:border-gold hover:text-gold transition-colors duration-500 tracking-[0.2em] hover:glow-gold"
+            >
               お問い合わせ
-            </button>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* フッター */}
-      <footer className="bg-gray-900 text-white py-8 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="text-2xl font-bold mb-4">HAYABLOG</div>
-          <p className="text-gray-400">
-            &copy; 2024 はやと. All Rights Reserved.
+      <footer className="bg-black text-white py-16 px-6 border-t border-white/5">
+        <div className="max-w-6xl mx-auto flex flex-col items-center">
+          <div className="text-3xl font-serif tracking-[0.3em] mb-8 text-white/50 hover:text-gold-gradient transition-colors cursor-default">HAYABLOG</div>
+          <div className="flex space-x-10 mb-10">
+            <a href="#" className="text-gray-500 hover:text-gold transition-colors tracking-widest text-sm">TWITTER</a>
+            <a href="#" className="text-gray-500 hover:text-gold transition-colors tracking-widest text-sm">YOUTUBE</a>
+            <a href="#" className="text-gray-500 hover:text-gold transition-colors tracking-widest text-sm">GITHUB</a>
+          </div>
+          <p className="text-gray-700 text-xs tracking-[0.2em]">
+            &copy; 2024 HAYATO. ALL RIGHTS RESERVED.
           </p>
         </div>
       </footer>
