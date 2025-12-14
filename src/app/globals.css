@@ -12,10 +12,19 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-samurai-black: var(--samurai-black);
-  --color-paper-white: var(--paper-white);
-  --color-gold-accent: var(--gold-accent);
-  --color-blood-red: var(--blood-red);
+
+  /* Colors */
+  --color-samurai-black: #0f0f10;
+  --color-samurai-dark: #1a1a1c;
+  --color-paper-white: #f0f0f0;
+  --color-gold: #ccaa6c;
+  --color-gold-light: #e6c88d;
+  --color-gold-dark: #b89655;
+  --color-blood-red: #8a1c1c;
+
+  /* Fonts */
+  --font-serif: var(--font-cinzel), serif;
+  --font-jp: var(--font-noto-serif-jp), serif;
 }
 
 body {
